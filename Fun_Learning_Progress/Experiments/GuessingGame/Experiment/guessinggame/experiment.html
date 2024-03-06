@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Franziska Brändle">
+    <meta charset="utf-8">
+    <title>Guessing Game</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" >
+    <link rel="stylesheet" type="text/css" href="css/slider.css">
+    <link rel="stylesheet" type="text/css" href="css/guessingGame_custom.css">
+    <script type="text/javascript" ></script>
+
+
+ </head>
+
+  <body>
+
+    <div class='container' style="width: 95%; height: 95%">
+      <div id="page1a" style="display:block;">
+        <br>
+        <div id="consentform" style="display:block; width: 80%" >
+          <h3>Consent form for participation in this online experiment</h3>
+
+          <p> Computational Principles of Intelligence Lab</p>
+          <p> Designed by: Franziska Brändle<br>
+                  Email: <b>cpilab@tuebingen.mpg.de</b>
+          <h4> Consent to Participate in the Learning Study </h4>
+          <p> This is a psychology experiment conducted by Eric Schulz, group leader of the Computational Principles of Intelligence Lab at the Max Planck Institute for Biological Cybernetics, and the members of his lab. <br> To consent to participate, you MUST meet the following criteria to participate in the experiment:</p>
+
+          <b> 18 years of age or older. <br></b>
+          <b> A fluent speaker of English. <br></b>
+          <b> Have not previously participated in this experiment. <br></b>
+
+          <p><br>This study is designed to look at how people learn to make decisions to accomplish their goals. In this task, you will be asked to make choices, play games, and answer questions related to those games. <br>The study will take about <b>15 minutes</b> and will pay <b>$3.00</b>.</p>
+
+          <p>Your participation in this research is voluntary. You may refrain from answering any questions that make you uncomfortable and may withdraw your participation at any time without penalty by exiting this task <!--br-->and alerting the experimenter either via MTurk or via the e-mail address below (please be sure to provide your MTurk ID). <br> You may choose not to complete certain parts of the task or answer certain questions. You may contact us at the address provided below if you have additional questions or concerns. </p>
+
+          <p>Other than monetary compensation, participating in this study will provide no direct benefits to you. But we hope that this research will benefit society at large <!--br-->by contributing towards establishing a scientific foundation for improving people’s learning abilities.</p>
+
+          <p>Your online username may be connected to your responses, but we will not be asking for any additional personally-identifying information, and we will handle responses as confidentially as possible. <br> We cannot, however, guarantee the confidentiality of information transmitted over the Internet. We will be keeping de-identified data collected as part of this experiment indefinitely. <br>Data used in scientific publications will remain completely anonymous.</p>
+
+          <p>If you have any questions about the study, feel free to contact our lab. We can be reached at <b>cpilab@tuebingen.mpg.de</b>. </p>
+
+          <ul>
+                <li><b>By selecting the “consent” option below, I acknowledge the participation criteria, that I have read this consent form, and that I agree to take part in the research.</b> </li>
+          </ul>
+          <br>
+          <button class='btn-primary text-xl' type="button" name="button" id="buttonConsentForm" onclick="submitConsentForm();">I consent to participate</button><br><br>
+          <br>
+          <p>If you do not want to consent, you cannot participate in the experiment and should close the window now. </p><br>
+
+          <div id="imageloader" style="display:none"></div>
+
+        </div>
+      </div>
+      <!--data protection form -->
+      <div id="page1b" style="display:none">
+
+        <div id="DataProtection" style = "display:block; width: 80%">
+          <h3>Legal Declaration of Consent under Data Protection Law:</h3>
+          <p><br>We also ask you to consent to have seen and understood our data protection policy, which can be viewed by clicking on the blue text below. Please do not fill it out.</p>
+          <p><br>I have received and took note of the written <a target="_blank" rel="noopener noreferrer" href="https://kyblab.tuebingen.mpg.de/faf/dataprotection.pdf">Data Protection Information Sheet</a> for this study. In doing so, I had sufficient time and opportunity to ask questions about data protection and reconsider my participation in the study. </p>
+
+          <p>I am aware that:</p>
+          <ul>
+                <li>the processing and use of the collected data occur in a pseudonymized form within the scope of the legally prescribed provisions.
+                    As a general rule, the storage occurs in the form of questionnaires, as well as on electronic data media, for 10 years
+                    or longer, if this is required by the purpose of the study.</li>
+                <li>by providing further personal data in pseudonymized form, collected personal data may be used for the preparation of anonymized
+                    scientific research work and may also be published and used in an anonymized form in medical journals, scientific publications
+                    and publicly accessible scientific databases, so that a direct assignment to my person cannot be established.</li>
+                <li>the information obtained during this study may also be sent in an anonymized form to cooperation partners within the
+                    scope of the European General Data Protection Regulation for scientific purposes and to cooperation partners outside of the
+                    European Union, i.e. to countries with a lower data protection level (this also applies to the USA).</li>
+                <li>the data collected within the scope of the study can also be used and processed in the future inside of the Institute.</li>
+          </ul>
+          <p>I was informed about my rights, that at any time:</p>
+          <ul>
+                  <li>I can withdraw this declaration of consent.</li>
+                  <li>I can request information about my stored data and request the correction or blocking of data.</li>
+                  <li>by cancellation of my participation in the study, I can request that my personal data collected until that time are immediately deleted or anonymized.</li>
+                  <li>I can request that my data are handed out to me or to third parties (if technically feasible).</li>
+          </ul>
+
+          <p>I herewith declare that:</p>
+          <ul>
+                  <li>I have been adequately informed about the collection and processing of my data and rights.</li>
+                  <li>I consent to the collection and processing of personal data within the scope of the study and its pseudonymized disclosure so that
+                    only the persons conducting the study can establish a link between the data and my person.</li>
+          </ul>
+          <p>By selecting the consent option below, I agree to participate in online studies or experiments using learning, and I consent to the use of my data described in the Data Protection Information Sheet and confirm having received a copy of the Data Protection Sheet.</p>
+          <p>Note: If you do not consent to participate in this study or have your data used as outlined in the Data Protection Information Sheet, then this experiment will now close and you will not proceed any further. No information about you will be retained. </p>
+          <br>
+        </div>
+
+        <button class='btn-primary text-xl' type="button" id="buttonDataForm" onclick="submitDataForm();">I consent</button><br>
+        <br>
+        <p>If you do not want to consent, you cannot participate in the experiment and should close the window now.</p><br>
+
+      </div>
+
+
+
+      <div id="page2" class="row" style="display:none">
+        <br><br>
+        <div id = "instructionPicture" class="col-md-12">
+          <center><img src="Instructions/0.PNG" alt="Instructions" width="80%"></center>
+        </div>
+        <center>
+          <button class='btn-primary text-xl' type="button" style="visibility:hidden" id="buttonExplanationBack" onclick="lastExplanation();">Back</button>
+          <button class='btn-primary text-xl' type="button" id="buttonExplanation" onclick="nextExplanation();">Next</button>
+        </center>
+        <br><br>
+      </div>
+
+
+      <div id="page2a" class="row" style="display:none">
+        <br>
+        <h1 style="font-size:28px">Please answer a few questions about this study before proceeding. </h1>
+
+        <div class="radio">
+        <legend style="font-size:20px">How many rounds do you have to play per machine?</legend>
+          <label>
+            <input type="radio" name="q1" id="q1a" value="option1" checked>
+             &nbsp &nbsp 10
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q1" id="q1b" value="option2">
+             &nbsp  &nbsp Differs from machine to machine
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q1" id="q1c" value="option3" >
+             &nbsp  &nbsp As many as you like but at least three
+          </label>
+        </div><br>
+
+        <div class="radio">
+        <legend style="font-size:20px">When does the experiment end?</legend>
+          <label>
+            <input type="radio" name="q2" id="q2a" value="option1" checked>
+             &nbsp  &nbsp When you have 20 times a difference of less than 5
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q2" id="q2b" value="option2">
+             &nbsp  &nbsp Automatically after around 10 minutes
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q2" id="q2c" value="option3" >
+             &nbsp  &nbsp When you played with 20 machines
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q2" id="q2d" value="option3" >
+             &nbsp  &nbsp When you played in total 100 rounds
+          </label>
+        </div><br>
+
+        <div class="radio">
+        <legend style="font-size:20px">What does the sign on top of each machine mean? </legend>
+          <label>
+            <input type="radio" name="q3" id="q3a" value="option1" checked>
+             &nbsp  &nbsp The signs are hints about the machine's output
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q3" id="q3b" value="option2">
+             &nbsp  &nbsp Machines with similar signs produce similar outputs
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="q3" id="q3c" value="option3" >
+             &nbsp  &nbsp Nothing
+          </label>
+        </div><br>
+
+        <div class="radio">
+          <legend style="font-size:20px">How often will you encounter a machine you already played with when pressing the "Go To New Machine" button? </legend>
+            <label>
+              <input type="radio" name="q4" id="q4a" value="option1" checked>
+               &nbsp  &nbsp At least 2 times
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q4" id="q4b" value="option2">
+               &nbsp  &nbsp Never, you only get to see every machine once
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="q4" id="q4c" value="option3" >
+               &nbsp  &nbsp It's random, the same machines can randomly appear again
+            </label>
+          </div><br>
+
+        <p style="font-size:18px"> Only when you answered all the question correctly will you be able to start the study.</p>
+
+        <button class='btn-primary text-xl' type="button" id="buttonExplanation" onclick="submitExplanation();">Start</button>
+
+        <br><br>
+
+      </div>
+
+
+
+
+
+      <div id="page3" class="row" style ="display:none">
+
+        <div id="backgroundmachine" style = "position: relative; display :none; width:100%; padding-top: 56.25%">
+          <img src="images/GuessingGame_SteampunkUI_v2_small.png" alt="Machine" style= "position: absolute; top: 0%; width: 100%; height: auto">
+          <div id="machineWorkingImage" style="visibility: hidden; position:absolute; top: 0%; width:100%">
+            <img src="images/GuessingGame_SteampunkUI_v2_working.png" alt="MachineWorking" style= "width: 100%; height: auto">
+          </div>
+          <div id="machinetext" style="position: absolute; top: 5.5%; width: 103%; text-align: center; font-size: 7vw"><p>Machine A</p></div>
+
+          <div id="guessSliderArea" style="position:absolute; top: 30%; left: 27%; width:50%; text-align: center; font-size: 1.8vw;" >
+            <input type="range" min="1" max="100" value="50" class="slider1" id="guessSlider">
+            <p>Value:  <span id="guessValue"></span></p>
+          </div>
+
+          <button class='ownbutton' type="button" id="buttonSubmitGuess" style="position: absolute; top: 43%; left: 48%; font-size: 1.5vw; display:block; visibility:visible" onclick="evaluateGuess();">Submit</button>
+          <button class='ownbutton' type="button" id="buttonNextGuess" style="position: absolute; top: 40%; left: 44%; font-size: 1.5vw; display:inline-block; visibility:hidden" onclick="nextGuess();">Continue Guessing</button>
+          <button class='ownbutton' type="button" id="buttonEndGame" style="position: absolute; top: 46%; left: 43.5%; font-size: 1.5vw; display:inline-block; visibility:hidden" onclick="endGame();">Go To New Machine</button>
+
+          <div id="Guess" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 57%; left:41%; font-size:2.2vw;">
+            <p>You:</p>
+          </div>
+          <div id="finalGuessValue" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 57%; left:57%; font-size:2.2vw;">
+            <p>30</p>
+          </div>
+          <div id="Solution" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 63%; left:41%; font-size:2.2vw;">
+            <p>Machine:</p>
+          </div>
+          <div id="solutionValue" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 63%; left:57%; font-size:2.2vw;">
+            <p>24</p>
+          </div>
+          <div id="Difference" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 69%; left:41%; font-size:2.2vw;">
+            <p>Difference:</p>
+          </div>
+          <div id="differenceValue" style="font-family:'Courier New', Courier, monospace; font-weight: bold; position: absolute; top: 69%; left:57%; font-size:2.2vw;">
+            <p>06</p>
+          </div>
+
+        </div>
+
+        <center><div id="startGame" style="display:block;">
+
+          <h1> <font size="4"> Start a new machine. </font></h1>
+          <button class='btn-primary text-xl' type="button" id="buttonStartGame" onclick="assignGame();">Start</button>
+
+        </div></center>
+
+
+        <div id="rateGame" style="display:none;">
+
+          <center><div class="slidecontainer3">
+
+            <br><br>
+            <br><br>
+            <p>How much fun did you have playing with the last machine?</p>
+            <br><br>
+            1: Very little - 7: Very much
+            <br><br>
+            <input type="range" min="1" max="7" value="4" class="slider3" id="gameFunSlider">
+            <p>Value: <span id="gameFunValue"></span></p>
+            <br><br>
+            <br><br>
+            <center><button class='btn-primary text-xl' type="button" id="buttonSubmitGameFun" onclick="submitGameFun();">Submit</button> </center>
+
+          </div></center>
+
+        </div>
+
+      </div>
+
+      <div id="page4a" class="row" style="display:none">
+        <br><br>
+        <div id="mechanictext" class="text">
+          <h1> <font size="4">
+            The mechanic is here, your spaceship is ready! </font></h1>
+          <div id = "mechanicPicture">
+            <center><img src="images/mechanic.png" alt="Mechanic"></center>
+          </div>
+
+        <button class='btn-primary text-xl' class='btn-primary text-xl' type="button" id="buttonEndExperiment" onclick="goToThankYou();">Next</button>
+        </div>
+      </div>
+
+      <div id="page4b" class="row" style="display:none">
+        <br><br>
+        <div id="thankyoutext" class="text">
+          <h1> <font size="4">
+            Thank you for playing our game. Please answer the questions on the following page to complete the experiment. </font></h1>
+        <button class='btn-primary text-xl' class='btn-primary text-xl' type="button" id="buttonEndExperiment" onclick="goToQuestionnaire();">Next</button>
+        </div>
+      </div>
+
+      <div id="page5" class="row" style="display:none">
+        <div class="text-1" id="questionnaire" >
+          <h1> <font size="4">Please answer the following questions to complete the experiment. </font> </h1>
+        </div>
+        <br><br>
+
+        <div class="questions">
+          How old are you?
+        </div>
+        <br>
+        <div style="text-align: left" class="slidecontainer2">
+          <input type="range" min="18" max="99" value="58" class="slider1" id="ageSlider">
+          <p>Age: <span id="ageValue"></span></p>
+        </div>
+        <br><br>
+        <br><br>
+
+        <div class="questions">
+          What is your gender?
+        </div>
+        <br>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="g1" value="option1">
+              &nbsp  &nbsp Female
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="g2" value="option2" >
+              &nbsp  &nbsp Male
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="g3" value="option3">
+              &nbsp  &nbsp Diverse
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="g4" value="option4">
+              &nbsp  &nbsp Prefer not to answer
+          </label>
+        </div>
+
+        <br><br>
+        <br><br>
+
+        <div class="questions">
+          Did you have a specific goal in mind while playing the game? If so, what was it?
+        </div>
+        <br>
+        <div style="text-align: left">
+          <input type="text" id="freeAnswerGoal" name="answerTextBox" size="100">
+        </div>
+
+        <br><br>
+        <br><br>
+
+
+        <div class="questions">
+          Do you have any remarks?
+        </div>
+        <br>
+        <div style="text-align: left">
+          <input type="text" id="freeAnswerRemarks" name="answerTextBox" size="100">
+        </div>
+        <br><br>
+        <br><br>
+
+
+
+        <button class='btn-primary text-xl' type="button" name="button" id="buttonQuestionnaire4" onclick="endExperiment();">Submit</button>
+        <br><br>
+      </div>
+
+      <div id="end"  style="display:none; text-align:center;">
+        <br><br>
+
+        <div class="page-header" id="thankyou" >
+          <h1> <font size="4">Thank you! <br>
+            To earn your fee of $3.00, please copy and paste the following completion code into the Amazon MTurk window for this HIT: <br><br>
+
+            <div id="surveytext"><p>completioncode</p></div>
+            <br>
+
+            You can now close the window.</font> </h1>
+        </div>
+
+      </div>
+
+      <div id="NoGuessModal" class="modal">
+        <div class="modal-content">
+          <span class="close1">&times;</span>
+          <p>You need to interact with the slider before moving on.</p>
+        </div>
+      </div>
+
+      <div id="NotAllAnswersModal" class="modal">
+        <div class="modal-content">
+          <span class="close2">&times;</span>
+          <p>You need to answer the questions before moving on.</p>
+        </div>
+      </div>
+
+      <div id="WrongAnswerModal" class="modal">
+        <div class="modal-content">
+          <span class="close3">&times;</span>
+          <p>You have answered some of the questions wrong. Please try again.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/FunInVariance.js" charset="utf-8"></script>
+
+  </body>
+</html>

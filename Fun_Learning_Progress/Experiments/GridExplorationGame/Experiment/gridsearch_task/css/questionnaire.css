@@ -1,0 +1,20 @@
+.likert ul
+    {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+.likert li
+    {
+        float: left;
+        text-align: left;
+        list-style-type: none;
+
+        ;
+
+    }
+.questions 
+    {   padding-left: : 20;
+        font-size: 17px
+    }

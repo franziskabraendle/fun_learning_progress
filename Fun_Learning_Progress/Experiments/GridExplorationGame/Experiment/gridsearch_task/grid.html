@@ -1,0 +1,411 @@
+<!--Original author: Charley Wu. Adapted by: Franziska Brändle-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta charset="utf-8">
+    <title>Exploration Game</title>
+    <script src="js/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="js/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" >
+    <link rel="stylesheet" type="text/css" href="css/grid2D.css">
+    <link rel="stylesheet" type="text/css" href="css/questionnaire.css">
+    <script type="text/javascript" src="kernel12.json"></script>
+
+ </head>
+
+  <body>
+
+    <div class='container' style="width: 95%; height: 95%">
+        <!--First page contains Demographic Information -->
+        <div id="page1" class="col-xs-4 col-xs-offset-4" style="display:block;">
+            <center>
+            <br>
+            <h1>Exploration Game</h1><br>
+            <!-- Here we need the Informed Consent Form! -->
+            <br>
+               You can start the experiment now.
+               <br>
+            <br>
+            <button style="font-size:28px" class='btn-primary' type="button" name="button"; onclick="assignScenario();" >Start</button>
+
+        </div>
+
+        <div id="page2" class="row" style="display:none">
+
+             <div class="col-md-8" id='gridDiv'>
+                <table id='grid' class='grid'> <tbody></tbody> </table>
+            </div>
+            <div class="col-md-4" id='sidePanel' >
+                <div class="row">
+                    <div  class ="col-md" id ='progress' style="text-align: left">
+                        <br>
+                        <button class='btn-primary text-xl' type="button" name="button" id="buttonNext" onclick="chooseNextButtonFunction();">Next</button>
+                        <br>
+                    </div>
+                </div>
+
+
+                    <div class="row" id="sidebarInstructions">
+                        <br>
+                      <div class="col-md">
+                          <p id="sidebarInstructions-1" class="text-l">
+                          <br><br>
+                          In the following study, you will be presented with a series of different grids, where each tile on the grid is an option you can choose to sample.
+                          <br><br>
+                          Different tiles show different amounts of points. The points are based on the location of the tile on the grid, as <b>tiles in the same area tend to yield similar point values</b>.
+                          The tiles are color coded as a visual aid with darker colors corresponding to larger point values.
+                          <br><br>
+                          Your task consists of <b>exploring grids for 10 minutes</b>. You can explore as many grids as you like and you can spend as much time as you want on each grid.
+                          When you don’t like to explore a grid any further you can click on “Next” to move on to the next grid.
+                          But you need to reveal at least five tiles of a grid before you can move on to the next one. You can click on every tile only once.
+                          <br><br>
+                          After the 10 minutes have run out, clicking on “Next” will lead you to a questionnaire.
+                          <br><br>
+                          Try to explore the grid now by clicking on different tiles. When you’re ready to start, click on “Next”.
+                          </p>
+                      </div>
+                    </div>
+
+
+            </div> <!--End of Sidepanel-->
+        </div> <!-- End of Page2-->
+
+
+        <div id="page3" style="display:none">
+            <br>
+            <h1 style="font-size=28px">Please answer a few questions about this study before proceeding. </h1>
+
+            <div class="radio">
+            <legend style="font-size:20px">How many tiles do you have to reveal before going to the next grid?</legend>
+              <label>
+                <input type="radio" name="q1" id="q1a" value="option1" checked>
+                 &nbsp &nbsp All tiles of a grid
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q1" id="q1b" value="option2">
+                 &nbsp  &nbsp At least five
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q1" id="q1c" value="option3" >
+                 &nbsp  &nbsp Twenty
+              </label>
+            </div><br>
+
+            <div class="radio">
+            <legend style="font-size:20px">How many grids are there to explore?</legend>
+              <label>
+                <input type="radio" name="q2" id="q2a" value="option1" checked>
+                 &nbsp  &nbsp 6
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q2" id="q2b" value="option2">
+                 &nbsp  &nbsp 8
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q2" id="q2c" value="option3" >
+                 &nbsp  &nbsp 10
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q2" id="q2d" value="option3" >
+                 &nbsp  &nbsp As many as you like
+              </label>
+            </div><br>
+
+            <div class="radio">
+            <legend style="font-size:20px">How are the points distributed?</legend>
+              <label>
+                <input type="radio" name="q3" id="q3a" value="option1" checked>
+                 &nbsp  &nbsp Randomly
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q3" id="q3b" value="option2">
+                 &nbsp  &nbsp High-value points are never next to each other
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q3" id="q3c" value="option3" >
+                 &nbsp  &nbsp High-value points are always in the same area
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="q3" id="q3d" value="option3" >
+                 &nbsp  &nbsp High-value points tend to be in the same area
+
+              </label>
+            </div><br>
+            <p style="font-size:18px"> Only when you answered all the question correctly will you be able to start the study.</p>
+            <div>
+                <button style="font-size:28px" class='btn-primary' type="button" name="button"; onclick="instructioncheck()"; >Check answers</button>
+            </div>
+        </div>
+
+
+        <div id="page4" style="display:none">
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <center>
+            <h1 style="font-size:24px" > Very good. You have answered all questions correctly and can now start the study.</h1> <br><br>
+            </center>
+            <div >
+                <center>
+                <button style="font-size:28px" class='btn-primary' type="button" name="button"; onclick="startExperiment()"; >Start</button>
+            </center>
+            </div>
+        </div>
+
+        <!--Page 5 can be used for possible bonus rounds-->
+        <div id="page5" style="display:none; text-align: center;">
+
+        </div>
+
+        <div id="page6" style="display:none; text-align: center;">
+            <div class="page-header" id="thanksforcompleting" >
+                <h1> <font size="4">Thank you for participating in our experiment.</font> </h1>
+            </div>
+            <br><br>
+            <div style="text-align: center">
+                <button style="font-size:28px; bottom: 100px;" class='btn-primary' type="button" id="finishButton"; onclick="senddata()"; >Done</button>
+            </div>
+        </div>
+
+
+        <div id="page7" style="display:none; text-align: left;">
+            <div class="text-1" id="questionnaire1" >
+                <h1> <font size="4">Thank you for playing the game. On the following pages, you find several statements about your experience. Please rate them all on the 1 to 7 scale. </font> </h1>
+            </div>
+            <br><br>
+
+
+            <div class="questions">
+                How much fun did you have in the last grid?
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not Much   <input id="f10" type="radio" name="Question1" value="1" />
+            <li class="likert"><input id="f11" type="radio" name="Question1" value="2" />
+            <li class="likert"><input id="f12" type="radio" name="Question1" value="3" />
+            <li class="likert"><input id="f13" type="radio" name="Question1" value="4" />
+            <li class="likert"><input id="f14" type="radio" name="Question1" value="5" />
+            <li class="likert"><input id="f15" type="radio" name="Question1" value="6" />
+            <li class="likert"><input id="f16" type="radio" name="Question1" value="7" />    Very Much
+            </ul>
+            </div>
+            <br><br>
+            <br><br>
+
+            <div class="questions">
+                How much fun did you have overall during the game?
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not Much   <input id="f20" type="radio" name="Question2" value="1" />
+            <li class="likert"><input id="f21" type="radio" name="Question2" value="2" />
+            <li class="likert"><input id="f22" type="radio" name="Question2" value="3" />
+            <li class="likert"><input id="f23" type="radio" name="Question2" value="4" />
+            <li class="likert"><input id="f24" type="radio" name="Question2" value="5" />
+            <li class="likert"><input id="f25" type="radio" name="Question2" value="6" />
+            <li class="likert"><input id="f26" type="radio" name="Question2" value="7" />    Very Much
+            </ul>
+            </div>
+            <br><br>
+            <br><br>
+
+            <button class='btn-primary text-xl' type="button" name="button" id="buttonQuestionnaire1" onclick="submitQuestionnaire1();">Submit</button>
+        </div>
+
+        <div id="page8" style="display:none; text-align: left;">
+            <div class="questions">
+                I enjoyed doing this activity very much.
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not At All True   <input id="f30" type="radio" name="Question3" value="1" />
+            <li class="likert"><input id="f31" type="radio" name="Question3" value="2" />
+            <li class="likert"><input id="f32" type="radio" name="Question3" value="3" />
+            <li class="likert"><input id="f33" type="radio" name="Question3" value="4" />
+            <li class="likert"><input id="f34" type="radio" name="Question3" value="5" />
+            <li class="likert"><input id="f35" type="radio" name="Question3" value="6" />
+            <li class="likert"><input id="f36" type="radio" name="Question3" value="7" />    Very True
+            </ul>
+            </div>
+            <br><br>
+            <br><br>
+
+            <div class="questions">
+                I thought this was a boring activity.
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not At All True   <input id="f40" type="radio" name="Question4" value="1" />
+            <li class="likert"><input id="f41" type="radio" name="Question4" value="2" />
+            <li class="likert"><input id="f42" type="radio" name="Question4" value="3" />
+            <li class="likert"><input id="f43" type="radio" name="Question4" value="4" />
+            <li class="likert"><input id="f44" type="radio" name="Question4" value="5" />
+            <li class="likert"><input id="f45" type="radio" name="Question4" value="6" />
+            <li class="likert"><input id="f46" type="radio" name="Question4" value="7" />    Very True
+            </ul>
+            </div>
+            <br><br>
+            <br><br>
+
+            <div class="questions">
+                This activity did not hold my attention at all.
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not At All True   <input id="f50" type="radio" name="Question5" value="1" />
+            <li class="likert"><input id="f51" type="radio" name="Question5" value="2" />
+            <li class="likert"><input id="f52" type="radio" name="Question5" value="3" />
+            <li class="likert"><input id="f53" type="radio" name="Question5" value="4" />
+            <li class="likert"><input id="f54" type="radio" name="Question5" value="5" />
+            <li class="likert"><input id="f55" type="radio" name="Question5" value="6" />
+            <li class="likert"><input id="f56" type="radio" name="Question5" value="7" />    Very True
+            </ul>
+            </div>
+            <br><br>
+            <br><br>
+
+            <div class="questions">
+                I would describe this activity as very interesting.
+            </div>
+
+            <div style="text-align: center">
+                <ul class="likert">
+            <li class="likert"> Not At All True   <input id="f60" type="radio" name="Question6" value="1" />
+            <li class="likert"><input id="f61" type="radio" name="Question6" value="2" />
+            <li class="likert"><input id="f62" type="radio" name="Question6" value="3" />
+            <li class="likert"><input id="f63" type="radio" name="Question6" value="4" />
+            <li class="likert"><input id="f64" type="radio" name="Question6" value="5" />
+            <li class="likert"><input id="f65" type="radio" name="Question6" value="6" />
+            <li class="likert"><input id="f66" type="radio" name="Question6" value="7" />    Very True
+            </div>
+            <br><br>
+            <br><br>
+
+             <button class='btn-primary text-xl' type="button" name="button" id="buttonQuestionnaire2" onclick="submitQuestionnaire2();">Submit</button>
+
+          </div>
+
+          <div id="page9" style="display:none; text-align: left;">
+
+            <div class="text-1" id="questionnaire2" >
+                <h1> <font size="4">Thank you for rating the statements. In the following you find three additional questions about the experiment. Please answer them before submitting the questionnaire. </font> </h1>
+            </div>
+
+             <div class="questions">
+                What did you try to achieve by clicking on the grids?
+            </div>
+            <br>
+
+            <div style="text-align: left">
+              <input type="text" id="freeAnswer1" name="answerTextBox" size="100">
+
+            </div>
+            <br><br>
+            <br><br>
+
+             <div class="questions">
+                Have you set yourself any goals, and if so, which ones?
+            </div>
+            <br>
+
+            <div style="text-align: left">
+              <input type="text" id="freeAnswer2" name="answerTextBox" size="100">
+
+            </div>
+            <br><br>
+            <br><br>
+
+             <div class="questions">
+                Do you have some general remarks?
+            </div>
+            <br>
+
+            <div style="text-align: left">
+              <input type="text" id="freeAnswer3" name="answerTextBox" size="100">
+
+            </div>
+            <br><br>
+            <br><br>
+
+            <button class='btn-primary text-xl' type="button" name="button" id="buttonQuestionnaire3" onclick="submitQuestionnaire3();">Submit</button>
+
+             </div>
+
+          <div id="page10" style="display:none; text-align: left;">
+
+            <div class="text-1" id="questionnaire3" >
+                <h1> <font size="4">Thank you for answering the questions. Please provide your age and gender to complete the experiment. </font> </h1>
+            </div>
+            <br><br>
+
+            <div class="questions">
+                How old are you?
+            </div>
+            <br>
+
+            <div style="text-align: left">
+              <input type="text" id="freeAnswer4" name="answerTextBox" size="100">
+
+            </div>
+            <br><br>
+            <br><br>
+
+             <div class="questions">
+                What is your gender?
+            </div>
+            <br>
+
+            <div style="text-align: left">
+              <input type="text" id="freeAnswer5" name="answerTextBox" size="100">
+
+            </div>
+            <br><br>
+            <br><br>
+
+            <button class='btn-primary text-xl' type="button" name="button" id="buttonQuestionnaire4" onclick="submitQuestionnaire4();">Submit</button>
+
+          </div>
+
+
+      <div id="rt-end"  style="display:none; text-align:center;">
+            <br><br>
+
+           <div class="page-header" id="thanks" >
+                <h1> <font size="4">Thank you!</font> </h1>
+            </div>
+
+        </div>
+
+      </div>
+
+        <script src="js/gridSearch30.js" charset="utf-8"></script>
+
+    </body>
+
+
+</html>
