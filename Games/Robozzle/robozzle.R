@@ -1,3 +1,6 @@
+#Analysis of Robozzle Data. 
+#Data origin: http://robozzle.com/js/index.aspx
+
 
 #house keeping
 rm(list=ls())

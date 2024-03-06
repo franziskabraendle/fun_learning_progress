@@ -1,4 +1,5 @@
-
+#Analysis of Super Mario Data using categories. 
+#Data origin: https://www.kaggle.com/datasets/leomauro/smmnet/data  by Leonardo Mauro 
 
 #house keeping
 rm(list=ls())

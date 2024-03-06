@@ -1,3 +1,5 @@
+#Analysis of Trackmania Data. 
+#Data origin: https://tmnf.exchange/
 
 #house keeping
 rm(list=ls())
