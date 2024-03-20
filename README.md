@@ -1,5 +1,5 @@
 # fun_learning_progress
-Repository for the paper "The dynamics of fun - Intrinsic motivation from learning progress in different environments" by Brändle, Wu and Schulz. 
+Repository for the paper "Leveling up fun: Learning progress, achievement, and expectations influence enjoyment in video games" by Brändle, Wu and Schulz. 
 
 ## Credits
 If you have any cquestions, or for any additional information contact me via franziska.braendle@tuebingen.mpg.de.
