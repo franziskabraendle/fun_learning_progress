@@ -1,5 +1,5 @@
 # fun_learning_progress
-Repository for the paper "Leveling up fun: Learning progress, achievement, and expectations influence enjoyment in video games" by Brändle, Wu and Schulz. 
+Repository for the paper "Leveling up fun: Learning progress, expectations, and success influence enjoyment in video games" by Brändle, Wu and Schulz. 
 
 ## Credits
 If you have any cquestions, or for any additional information contact me via franziska.braendle@tuebingen.mpg.de.
