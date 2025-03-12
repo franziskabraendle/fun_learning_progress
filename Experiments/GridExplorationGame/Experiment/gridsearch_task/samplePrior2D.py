@@ -45,25 +45,21 @@ def samplePrior(k, imageFileName, xmin=0, xmax=29, normalize = True):
 
 
 #Create experiment data
-filename = 'experiment2D/kernel12.json' #, 'experiment2D/kernel8.json']
+filename = 'experiment2D/kernel11.json' #, 'experiment2D/kernel8.json']
 #number of samples
-samples = 30
+samples = 45
 #roundNumber = 0
 outputData = {}
 gridCounter=0
 
 #Sample and save output data and plots
-for n in range(0,11):
-	if n == 0:
-		lambdaValue = 0.001
-	else:
-		lambdaValue = 2*n
-	kernel12 = GPy.kern.RBF(input_dim=2, variance=1, lengthscale=(lambdaValue))
+for n in range(-2,5):
+	kernel11 = GPy.kern.RBF(input_dim=2, variance=1, lengthscale=(2**n))
 
 	#sample payout matrix and also create plots
 	for sample in range(samples):
-		figName = 'experiment2D/images8/kernel%i.%i.pdf' % (gridCounter, sample)
-		(outputData[sample+(gridCounter*samples)], figure) = samplePrior(kernel12, figName)
+		figName = 'experiment2D/images7/kernel%i.%i.pdf' % (gridCounter, sample)
+		(outputData[sample+(gridCounter*samples)], figure) = samplePrior(kernel11, figName)
 
 	gridCounter +=1
 

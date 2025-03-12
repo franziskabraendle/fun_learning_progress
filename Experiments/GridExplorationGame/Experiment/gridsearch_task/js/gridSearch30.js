@@ -81,7 +81,7 @@ var workerID=turkGetParam('workerId');
 function assignScenario() {
 
     clicks = horizon; //set initial number of clicks to horizon
-    initialEnvs = kernel12;
+    initialEnvs = kernel11;
     //put environments from the randomized envOrder into environmentList
     for (i = 0; i <= rounds; i++) {
       environmentList[envOrder[i]] = initialEnvs[envOrder[i]];
