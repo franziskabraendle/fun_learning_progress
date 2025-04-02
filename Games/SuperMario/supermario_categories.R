@@ -12,8 +12,8 @@ library(lme4)
 library(cowplot)
 
 
-#confidence interval function
-ci<-function(x){1.96*sd(x)/sqrt(length(x))}
+#standard error function
+se<-function(x){sd(x)/sqrt(length(x))}
 
 ApplyPercentiles20labels <- function(x) {
   breaks <- quantile(x, probs = seq(0, 1, by = 0.05), names = FALSE)
@@ -56,8 +56,8 @@ summary(regression)
 d$percentiles <- ApplyPercentiles20labels(d$difficulty_difference)
 summary(d$percentiles)
 
-#per clear rate/difficulty/percentiles we are calculating the mean like rate and CIs
-dd<-ddply(d, ~percentiles, summarize,  m=mean(likerate), ci=ci(likerate))
+#per clear rate/difficulty/percentiles we are calculating the mean like rate and SEs
+dd<-ddply(d, ~percentiles, summarize,  m=mean(likerate), se=se(likerate))
 dd$percentiles <- as.numeric(levels(dd$percentiles))       ##### Problem, does not give me the right labels. 
 summary(dd$percentiles)
 dd$percentiles <- round(dd$percentiles, 2)
@@ -65,10 +65,9 @@ dd$percentiles <- round(dd$percentiles, 2)
 p1<-ggplot(dd, aes(x=percentiles, y=m, group=1)) +
   #minimal theme
   theme_classic()+
-  #error bars with MPI colors
-  #geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#FF7F00", size=1) +
-  #line with MPI colors
+  #error bars
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#FF7F00", size=1) +
+  #line
   #geom_line(col="#007268", size=1) +
   geom_line(col="#FF7F00", size=1) +
   #black points
@@ -88,16 +87,16 @@ p1
 #dev.off()
 
 nrow(d_easy)
-dd_easy<-ddply(d_easy, ~difficulty, summarize,  m=mean(likerate), ci=ci(likerate))
+dd_easy<-ddply(d_easy, ~difficulty, summarize,  m=mean(likerate), se=se(likerate))
 
 nrow(d_normal)
-dd_normal<-ddply(d_normal, ~difficulty, summarize,  m=mean(likerate), ci=ci(likerate))
+dd_normal<-ddply(d_normal, ~difficulty, summarize,  m=mean(likerate), se=se(likerate))
 
 nrow(d_expert)
-dd_expert<-ddply(d_expert, ~difficulty, summarize,  m=mean(likerate), ci=ci(likerate))
+dd_expert<-ddply(d_expert, ~difficulty, summarize,  m=mean(likerate), se=se(likerate))
 
 nrow(d_superExpert)
-dd_superExpert<-ddply(d_superExpert, ~difficulty, summarize,  m=mean(likerate), ci=ci(likerate))
+dd_superExpert<-ddply(d_superExpert, ~difficulty, summarize,  m=mean(likerate), se=se(likerate))
 
 
 #p1<-ggplot(dd_superExpert, aes(x=percentiles, y=m, group=1)) +
@@ -105,7 +104,7 @@ p2<-ggplot(dd_easy, aes(x=difficulty, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   #geom_line(col="#007268", size=1) +
   #black points
@@ -113,7 +112,6 @@ p2<-ggplot(dd_easy, aes(x=difficulty, y=m, group=1)) +
   xlim(0, 1)+
   #ylim(-0.25,1)+
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty")+ylab("Average like rate")+
   #xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   #title
@@ -128,7 +126,7 @@ p3<-ggplot(dd_normal, aes(x=difficulty, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   #geom_line(col="#007268", size=1) +
   #black points
@@ -136,7 +134,6 @@ p3<-ggplot(dd_normal, aes(x=difficulty, y=m, group=1)) +
   xlim(0, 1)+
   #ylim(-0.25,1)+
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty")+ylab("Average like rate")+
   #xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   #title
@@ -151,7 +148,7 @@ p4<-ggplot(dd_expert, aes(x=difficulty, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   #geom_line(col="#007268", size=1) +
   #black points
@@ -159,7 +156,6 @@ p4<-ggplot(dd_expert, aes(x=difficulty, y=m, group=1)) +
   xlim(0, 1)+
   #ylim(-0.25,1)+
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty")+ylab("Average like rate")+
   #xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   #title
@@ -174,7 +170,7 @@ p5<-ggplot(dd_superExpert, aes(x=difficulty, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   #geom_line(col="#007268", size=1) +
   #black points
@@ -182,7 +178,6 @@ p5<-ggplot(dd_superExpert, aes(x=difficulty, y=m, group=1)) +
   xlim(0, 1)+
   #ylim(-0.25,1)+
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty")+ylab("Average like rate")+
   #xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   #title

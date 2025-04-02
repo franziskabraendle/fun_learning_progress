@@ -23,6 +23,26 @@ frame <- readRDS(file="guessinggame.Rda")
 #use this for different version of data cleaning
 #frame <- readRDS(file="guessinggame_excluding_few_guesses_or_machines.Rda")
 
+#summary statistics
+frame_without_first <- frame[frame$trials!=1,]
+frame_without_first$variance_mapped_scaled <- scale(frame_without_first$variance_mapped)
+AvgDiffReg <- lmer(difference ~ 1 + variance_mapped_scaled + (1|participant), frame_without_first)
+summary(AvgDiffReg)
+
+AvgDiffPerPartPerVariance <- ddply(frame_without_first, .(participant, variance), summarize, performance=mean(difference))
+AvgDiffPerVariance <- ddply(AvgDiffPerPartPerVariance, .(variance), summarize, performance=mean(performance))
+AvgDiffPerVariance
+
+frame_correct_guesses <- frame_without_first[frame_without_first$difference==0,]
+correct_guesses <- table(frame_correct_guesses$variance_mapped)
+correct_guesses_df=as.data.frame(correct_guesses)
+cor.test(correct_guesses_df$Freq, as.numeric(correct_guesses_df$Var1))
+total_guesses <- table(frame_without_first$variance_mapped)
+ratio_guesses <- correct_guesses/total_guesses
+ratio_guesses
+correct_guesses
+
+#summarize data
 small_frame <- ddply(frame, c("participant", "machines"), summarize, engagement = rounds[1], variance = variance[1], variance_mapped = variance_mapped[1])
 
 numberTrials <- ddply(small_frame, .(participant), summarize, numbertrials=sum(engagement))

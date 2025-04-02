@@ -10,8 +10,8 @@ library(plyr)
 library(ggplot2)
 library(lme4)
 
-#confidence interval function
-ci<-function(x){1.96*sd(x)/sqrt(length(x))}
+#standard error function
+se<-function(x){sd(x)/sqrt(length(x))}
 
 ApplyPercentiles20labels <- function(x) {
   breaks <- quantile(x, probs = seq(0, 1, by = 0.05), names = FALSE)
@@ -73,21 +73,20 @@ box()
 h1
 
 
-#per percentiles we are calculating the mean like rate and CIs
-dd<-ddply(d, ~percentiles, summarize,  m=mean(likerate), ci=ci(likerate))
+#per percentiles we are calculating the mean like rate and SEs
+dd<-ddply(d, ~percentiles, summarize,  m=mean(likerate), se=se(likerate))
 
 #plotting it
 p1<-ggplot(dd, aes(x=percentiles, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   geom_line(col="#007268", size=1) +
   #black points
   geom_point(size=2, fill="black", col="black") +
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   scale_x_discrete(breaks = c(0.03, 0.23, 0.5, 0.75,  1))+
   #title
@@ -111,13 +110,12 @@ p2<-ggplot(dd, aes(x=percentiles, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci, col = segment), size=1, show.legend = FALSE) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se, col = segment), size=1, show.legend = FALSE) +
   #line with MPI colors
   geom_line(aes(color=segment), size=1, show.legend = FALSE) +
   #black points
   geom_point(size=2, fill="black", col="black") +
   #axes labels
-  #xlab("Difficulty (Percentiles)")+ylab("Average like rate ± 95% CI")+
   xlab("Difficulty (Percentiles)")+ylab("Average like rate")+
   scale_x_discrete(breaks = c(0.03, 0.23, 0.5, 0.75,  1))+
   #title
@@ -162,3 +160,26 @@ p5
 #svg("plot_SuperMario_hist.svg", width=4.5, height=3.5)
 #plot_grid(p5, nrow = 1)
 #dev.off()
+
+#### "scree" plot
+max_degree <- 10
+mse_results <- data.frame(Degree = integer(), MSE = numeric())
+
+for (deg in 1:max_degree) {
+  model <- lm(likerate ~ poly(difficulty_scale,deg, raw=TRUE), data=d)
+  mse <- mean(residuals(model)^2)  # Calculate MSE
+  mse_results <- rbind(mse_results, data.frame(Degree = deg, MSE = mse))
+}
+
+# Plot the MSE vs. Model Degree
+p_mse <- ggplot(mse_results, aes(x = Degree, y = MSE, group = 1)) +
+  theme_classic() +
+  geom_line(col = "#007268", size = 1) +  
+  scale_x_continuous(breaks = 1:max_degree) +
+  geom_point(fill = "black", col = "black", size = 2) +  
+  xlab("Polynomial Degree") + ylab("Mean Squared Error") +
+  theme(text = element_text(size = 18, family = "sans"))
+#ggtitle("Super Mario Maker")
+
+# Show the plot
+p_mse

@@ -15,9 +15,8 @@ library(MASS)
 library(cowplot)
 library(ggExtra)
 
-#confidence interval function
-ci<-function(x){1.96*sd(x)/sqrt(length(x))}
-
+#standard error function
+se<-function(x){sd(x)/sqrt(length(x))}
 
 #Clean Data set
 d<-read.csv("robozzle_data.csv", head=TRUE, sep=",")
@@ -59,14 +58,14 @@ box()
 h1
 
 
-dd2<-ddply(d, ~Percentiles, summarize,  m=mean(ProbLiked,na.rm=T), ci=ci(ProbLiked))
+dd2<-ddply(d, ~Percentiles, summarize,  m=mean(ProbLiked,na.rm=T), se=se(ProbLiked))
 
 #plotting it
 p1<-ggplot(dd2, aes(x=Percentiles, y=m, group=1)) +
   #minimal theme
   theme_classic()+
   #error bars with MPI colors
-  geom_errorbar(width=0, aes(ymin=m-ci, ymax=m+ci), col="#007268", size=1) +
+  geom_errorbar(width=0, aes(ymin=m-se, ymax=m+se), col="#007268", size=1) +
   #line with MPI colors
   geom_line(col="#007268", size=1) +
   #black points
@@ -110,3 +109,25 @@ p4
 #svg("plot_Robozzle_hist.svg", width=4.5, height=3.5)
 #plot_grid(p4, nrow = 1)
 #dev.off()
+
+#### "scree" plot
+max_degree <- 10
+mse_results <- data.frame(Degree = integer(), MSE = numeric())
+
+for (deg in 1:max_degree) {
+  model <- lm(ProbLiked ~ poly(DifficultyNumeric_scaled,deg, raw=TRUE), data=d)  # Polynomial regression
+  mse <- mean(residuals(model)^2)  # Calculate MSE
+  mse_results <- rbind(mse_results, data.frame(Degree = deg, MSE = mse))
+}
+
+# Plot the MSE vs. Model Degree
+p_mse <- ggplot(mse_results, aes(x = Degree, y = MSE, group = 1)) +
+  theme_classic() +
+  geom_line(col = "#007268", size = 1) + 
+  geom_point(fill = "black", col = "black", size = 2) +  
+  scale_x_continuous(breaks = 1:max_degree) +
+  xlab("Polynomial Degree") + ylab("Mean Squared Error") +
+  theme(text = element_text(size = 18, family = "sans"))
+
+# Show the plot
+p_mse
